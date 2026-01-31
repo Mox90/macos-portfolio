@@ -4,7 +4,7 @@ const App = () => {
 
   return (
     <main>
-        {/*Main Content Here*/}
+        <Navbar />
     </main>
   )
 }
