@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import {Navbar, Welcome} from "#components/index.js";
+import {Dock, Navbar, Welcome} from "#components/index.js";
 //import { ScrollTrigger } from "gsap/all";
 import { Draggable } from "gsap/Draggable";
 
@@ -11,6 +11,7 @@ const App = () => {
     <main>
         <Navbar />
         <Welcome />
+        <Dock />
     </main>
   )
 }
