@@ -5,7 +5,6 @@ import { Tooltip } from "react-tooltip";
 import {dockApps} from "#constants/index.js";
 import {useGSAP} from "@gsap/react";
 
-import dock from "#components/Dock.jsx";
 import useWindowStore from "../store/window.js";
 
 const Dock = () => {
