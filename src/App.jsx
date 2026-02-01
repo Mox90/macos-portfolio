@@ -1,7 +1,9 @@
 import gsap from "gsap";
-import {Dock, Navbar, Welcome} from "#components/index.js";
-//import { ScrollTrigger } from "gsap/all";
 import { Draggable } from "gsap/Draggable";
+
+import {Dock, Navbar, Welcome} from "#components/index.js";
+import { Terminal } from "#windows/index.js";
+//import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(Draggable);
 
@@ -12,6 +14,8 @@ const App = () => {
         <Navbar />
         <Welcome />
         <Dock />
+
+        <Terminal />
     </main>
   )
 }
