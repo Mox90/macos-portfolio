@@ -9,7 +9,7 @@ gsap.registerPlugin(Draggable);
 const WindowWrapper = (Component, windowKey) => {
     const Wrapped = (props) => {
         const { focusWindow, windows } = useWindowStore()
-        const { isOpen, zIndex } = windows[windowKey]
+        const { isOpen = false, zIndex = 0 } = windows?.[windowKey] ?? {}
         const ref = useRef(null)
 
         useGSAP(() => {
@@ -55,7 +55,7 @@ const WindowWrapper = (Component, windowKey) => {
         )
     }
 
-    Wrapped.displayName = `WindowWrapper(${Component.displayName || Component.name || "Component"}`
+    Wrapped.displayName = `WindowWrapper(${Component.displayName || Component.name || "Component"})`
 
     return Wrapped
 }
