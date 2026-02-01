@@ -1,11 +1,14 @@
 import gsap from "gsap";
+
 import {useRef} from "react";
 import { Tooltip } from "react-tooltip";
 import {dockApps} from "#constants/index.js";
 import {useGSAP} from "@gsap/react";
-import dock from "#components/Dock.jsx";
+
+import useWindowStore from "../store/window.js";
 
 const Dock = () => {
+    const { openWindow, closeWindow, windows } = useWindowStore()
     const dockRef = useRef(null)
 
     useGSAP(() => {
@@ -57,7 +60,22 @@ const Dock = () => {
 
 
     const toggleApp = (app) => {
-        //TODO Implement Open Window Logic
+        //console.log(`I have been toggle...`)
+        if(!app.canOpen) return;
+
+        const window = windows[app.id]
+        //console.log(`the is: ${window}`)
+
+        if(!window) return;
+
+        if(window?.isOpen) {
+            closeWindow(app.id)
+        } else {
+            openWindow(app.id)
+        }
+
+        //console.log(windows)
+
     }
 
     return (
@@ -73,7 +91,7 @@ const Dock = () => {
                             data-tooltip-content={name}
                             data-tooltip-delay-show={150}
                             disabled={!canOpen}
-                            onClick={() => toggleApp( id, canOpen)}
+                            onClick={() => toggleApp( {id, canOpen})}
                         >
                             <img
                                 src={`/images/${icon}`}
