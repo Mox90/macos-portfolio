@@ -1,6 +1,9 @@
-import Navbar from "#components/Navbar.jsx";
-import Welcome from "#components/Welcome.jsx";
-import Dock from "#components/Dock.jsx";
-import WindowControls from "#components/WindowControls.jsx"
+import Dock from "./Dock";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import Welcome from "./Welcome";
+import WindowControls from "./WindowControls";
 
-export { Navbar, Welcome, Dock, WindowControls }
+import MobileNavbar from "./mobile/Navbar";
+
+export { Dock, Home, Navbar, Welcome, WindowControls, MobileNavbar };
