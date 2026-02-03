@@ -1,39 +1,63 @@
 import gsap from "gsap";
-import { Draggable } from "gsap/Draggable";
-
-import {Dock, Navbar, Welcome} from "#components/index.js";
+import { Dock, Home, MobileNavbar, Navbar, Welcome } from "#components";
 import {
-    Contact,
-    Terminal,
-    Safari,
-    Resume,
-    Finder,
-    Text,
-    Image,
-} from "#windows/index.js";
-//import { ScrollTrigger } from "gsap/all";
+  Contact,
+  Finder,
+  Photos,
+  Resume,
+  Safari,
+  Terminal,
+  TextFile,
+  ImageFile,
+  MobileSafari,
+} from "#windows";
 
+import { Draggable } from "gsap/Draggable";
+import MobileContact from "#windows/mobile/Contact";
+import MobilePhotos from "#windows/mobile/Photos";
+import MobileText from "#windows/mobile/file/Text";
+import MobileImage from "#windows/mobile/file/Image";
+import MobileHome from "#components/mobile/Home";
+import MobileResume from "#windows/mobile/Resume";
+import MobileFinder from "#windows/mobile/Finder";
+import MobileTerminal from "#windows/mobile/Terminal";
 gsap.registerPlugin(Draggable);
 
-const App = () => {
+const App = () => (
+  <main>
+    <Navbar />
+    <MobileNavbar />
 
-  return (
-    <main>
-        <Navbar />
-        <Welcome />
-        <Dock />
+    <Welcome />
+    <Dock />
 
-        <Terminal />
-        <Safari />
-        <Resume />
-        <Finder />
+    <Terminal />
+    <MobileTerminal />
 
-        <Text />
-        <Image />
+    <Safari />
+    <MobileSafari />
 
-        <Contact />
-    </main>
-  )
-}
+    <Resume />
+    <MobileResume />
 
-export default App
+    <Finder />
+    <MobileFinder />
+
+    <TextFile />
+    <MobileText />
+
+    <ImageFile />
+    <MobileImage />
+
+    <Contact />
+    <MobileContact />
+
+    <Home />
+    <MobileHome />
+
+    <Photos />
+    <MobilePhotos />
+  </main>
+);
+
+export default App;

@@ -4,7 +4,7 @@ import useWindowStore from "#store/window";
 import WindowWrapper from "#hoc/WindowWrapper";
 import WindowControls from "#components/WindowControls";
 
-const Image = () => {
+const ImageFile = () => {
   const { windows: { imgfile: { data } } } = useWindowStore();
 
   if (!data) return null; 
@@ -31,6 +31,6 @@ const Image = () => {
   );
 };
 
-const ImageFileWindow = WindowWrapper(Image, "imgfile");
+const ImageFileWindow = WindowWrapper(ImageFile, "imgfile");
 
 export default ImageFileWindow;

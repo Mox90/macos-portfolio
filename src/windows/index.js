@@ -1,11 +1,22 @@
-import Terminal from "#windows/Terminal"
-import Safari from "#windows/Safari"
-import Resume from "#windows/Resume"
-import Finder from "#windows/Finder"
-import Image from "#windows/file/Image";
-import Text from "#windows/file/Text";
-import Contact from "#windows/Contact";
+import Contact from "./Contact";
+import Finder from "./Finder";
+import Photos from "./Photos";
+import Resume from "./Resume";
+import Safari from "./Safari";
+import Terminal from "./Terminal";
+import TextFile from "./file/Image";
+import ImageFile from "./file/Text";
 
 import MobileSafari from "./mobile/Safari";
 
-export { Terminal, Safari, Resume, Finder, Text, Image, Contact }
+export {
+  Contact,
+  Finder,
+  Photos,
+  Resume,
+  Safari,
+  Terminal,
+  TextFile,
+  ImageFile,
+  MobileSafari,
+};

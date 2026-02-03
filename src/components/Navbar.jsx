@@ -1,37 +1,47 @@
-import {navIcons, navLinks} from "#constants/index.js";
 import dayjs from "dayjs";
-import useWindowStore from "#store/window.js";
+
+import useWindowStore from "#store/window";
+import { navLinks, navIcons } from "#constants";
+import Theme from "./Theme";
 
 const Navbar = () => {
-    const { openWindow } = useWindowStore()
+  const { openWindow } = useWindowStore();
 
-    return (
-        <nav>
-            <div>
-                <img src="/images/logo.svg" alt=""/>
-                <p className="font-bold">Moctar's Portfolio</p>
+  return (
+    <nav>
+      <div>
+        <img src="/images/logo.svg" className="dark:invert" />
+        <p className="font-bold">Moctar's Portfolio</p>
 
-                <ul>
-                    {navLinks.map(({id, name, type}) => (
-                        <li key={id} onClick={() => openWindow(type)}>
-                            <p>{name}</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        <ul>
+          {navLinks.map(({ id, type, name }) => (
+            <li key={id}>
+              <p onClick={() => openWindow(type)}>{name}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            <div>
-                <ul>
-                    {navIcons.map(({id, img}) =>(
-                        <li key={id}>
-                            <img src={img} className={"icon-hover"} alt={`icon-${id}`}/>
-                        </li>
-                    ))}
-                </ul>
+      <div>
+        <ul>
+          {navIcons.map((icon) => (
+            <li key={icon.id}>
+              {icon.id === 4 ? (
+                <Theme />
+              ) : (
+                <img
+                  src={icon.img}
+                  className="icon dark:invert dark:hover:bg-dark-500!"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
 
-                <time>{dayjs().format('ddd D MMM hh:mm A')}</time>
-            </div>
-        </nav>
-    )
-}
-export default Navbar
+        <time>{dayjs().format("ddd MMM D h:mm A")}</time>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
