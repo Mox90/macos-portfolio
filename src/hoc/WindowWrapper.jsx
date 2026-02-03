@@ -7,56 +7,72 @@ import useWindowStore from "#store/window";
 gsap.registerPlugin(Draggable);
 
 const WindowWrapper = (Component, windowKey) => {
-    const Wrapped = (props) => {
-        const { focusWindow, windows } = useWindowStore()
-        const { isOpen = false, zIndex = 0 } = windows?.[windowKey] ?? {}
-        const ref = useRef(null)
+  const Wrapped = (props) => {
+    const { focusWindow, windows } = useWindowStore();
+    const { isOpen, zIndex } = windows[windowKey];
+    const ref = useRef(null);
+    const [isDesktop, setIsDesktop] = useState(true);
 
-        useGSAP(() => {
-            const el = ref.current
-            if(!el || !isOpen) return;
+    // Check if screen is desktop (sm breakpoint and above = 640px)
+    useEffect(() => {
+      const checkDesktop = () => {
+        setIsDesktop(window.innerWidth >= 640);
+      };
 
-            el.style.display = "block"
+      checkDesktop();
+      window.addEventListener('resize', checkDesktop);
 
-            gsap.fromTo(
-                el,
-                { scale: 0.8, opacity: 0, y: 40 },
-                { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power3.in" }
-            );
-        }, [isOpen])
+      return () => window.removeEventListener('resize', checkDesktop);
+    }, []);
 
-        useGSAP(() => {
-            const el = ref.current
-            if(!el) return
+    // --- Animate open only ---
+    useGSAP(() => {
+      const el = ref.current;
+      if (!el || !isOpen || !isDesktop) return;
 
-            const [instance] = Draggable.create(
-                el, {
-                    onPress: () => focusWindow(windowKey),
-                })
+      el.style.display = "block";
+      gsap.fromTo(
+        el,
+        { scale: 0.8, opacity: 0, y: 40 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
+      );
+    }, [isOpen, isDesktop]);
 
-            return () => instance.kill()
-        }, [])
+    // --- Draggable + focus ---
+    useGSAP(() => {
+      const el = ref.current;
+      if (!el || !isDesktop) return;
 
-        useLayoutEffect(() => {
-            const el = ref.current;
-            if (!el) return;
-            el.style.display = isOpen ? "block" : "none";
-        }, [isOpen]);
+      const [instance] = Draggable.create(el, {
+        onPress: () => focusWindow(windowKey),
+      });
+      return () => instance.kill();
+    }, [isDesktop]);
 
-        return (
-            <section
-                id={windowKey}
-                ref={ref}
-                style={{zIndex}}
-                className={"absolute"}
-            >
-                <Component {...props} />
-            </section>
-        )
-    }
+    useLayoutEffect(() => {
+      const el = ref.current;
+      if (!el) return;
+      el.style.display = (isOpen && isDesktop) ? "block" : "none";
+    }, [isOpen, isDesktop]);
 
-    Wrapped.displayName = `WindowWrapper(${Component.displayName || Component.name || "Component"})`
+    // Don't render on mobile
+    if (!isDesktop) return null;
 
-    return Wrapped
-}
-export default WindowWrapper
+    return (
+      <section
+        id={windowKey}
+        ref={ref}
+        style={{ zIndex }}
+        className="absolute"
+      >
+        <Component {...props} />
+      </section>
+    );
+  };
+
+  Wrapped.displayName = `WindowWrapper(${Component.displayName || Component.name || "Component"})`;
+
+  return Wrapped;
+};
+
+export default WindowWrapper;
